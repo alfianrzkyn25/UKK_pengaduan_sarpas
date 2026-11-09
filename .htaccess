@@ -1,0 +1,15 @@
+RewriteEngine On
+
+# /admin/dashboard        -> view/admin/dashboard.php
+# /user/laporan_saya      -> view/user/laporan_saya.php
+# /auth/login             -> auth/login.php
+# Query string (?id=..., ?msg=...) otomatis ikut terbawa oleh mod_rewrite.
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^admin/([a-zA-Z0-9_-]+)/?$ view/admin/$1.php [L,QSA,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^user/([a-zA-Z0-9_-]+)/?$ view/user/$1.php [L,QSA,NC]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^auth/([a-zA-Z0-9_-]+)/?$ auth/$1.php [L,QSA,NC]
