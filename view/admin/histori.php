@@ -40,7 +40,6 @@ $r = mysqli_query($conn, "SELECT h.*,s.nama,s.nis,COALESCE(ad.nama,h.diubah_oleh
     <ul>
       <li><a href="<?= e(url('admin/dashboard')) ?>" class="">Dashboard</a></li>
       <li><a href="<?= e(url('admin/aspirasi')) ?>" class="">Data Aspirasi</a></li>
-      <li><a href="<?= e(url('admin/form_aspirasi')) ?>" class="">form aspirasi</a></li>
       <li><a href="<?= e(url('admin/histori')) ?>" class="active">Histori Laporan</a></li>
       <li><a href="<?= e(url('admin/kategori')) ?>" class="">Kategori Sarpras</a></li>
       <li><a href="<?= e(url('admin/siswa')) ?>">Kelola Siswa</a></li>

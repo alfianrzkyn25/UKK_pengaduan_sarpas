@@ -41,7 +41,6 @@ $r = mysqli_query($conn, "SELECT a.id_aspirasi,a.nis,s.nama,k.nama_kategori,a.lo
         <ul>
             <li><a href="<?= e(url('admin/dashboard')) ?>" class="active">Dashboard</a></li>
             <li><a href="<?= e(url('admin/aspirasi')) ?>" class="">Data Aspirasi</a></li>
-            <li><a href="<?= e(url('admin/form_aspirasi')) ?>" class="">form aspirasi</a></li>
             <li><a href="<?= e(url('admin/histori')) ?>" class="">Histori Laporan</a></li>
             <li><a href="<?= e(url('admin/kategori')) ?>" class="">Kategori Sarpras</a></li>
             <li><a href="<?= e(url('admin/siswa')) ?>">Kelola Siswa</a></li>

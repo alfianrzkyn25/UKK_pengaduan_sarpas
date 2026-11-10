@@ -274,7 +274,6 @@ if (isset($st) && $st instanceof mysqli_stmt) mysqli_stmt_close($st);
     <ul>
       <li><a href="<?= e(url('admin/dashboard')) ?>">Dashboard</a></li>
       <li><a href="<?= e(url('admin/aspirasi')) ?>">Data Aspirasi</a></li>
-      <li><a href="<?= e(url('admin/form_aspirasi')) ?>">Form Aspirasi</a></li>
       <li><a href="<?= e(url('admin/histori')) ?>">Histori Laporan</a></li>
       <li><a href="<?= e(url('admin/kategori')) ?>">Kategori Sarpras</a></li>
       <li><a href="<?= e(url('admin/siswa')) ?>" class="active">Kelola Siswa</a></li>

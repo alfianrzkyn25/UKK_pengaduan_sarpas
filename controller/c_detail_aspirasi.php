@@ -25,7 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old = mysqli_fetch_assoc(mysqli_stmt_get_result($st));
     mysqli_stmt_close($st);
 
-    $bolehTolak = $old && $old['status'] !== 'Ditolak' && $old['status'] !== 'Selesai';
+    // Ditolak hanya boleh kalau status masih Menunggu (belum diproses admin).
+    $bolehTolak = $old && $old['status'] === 'Menunggu';
     $statusValid = $old && (
         $status === $old['status'] ||
         $status === ($statusBerikut[$old['status']] ?? null) ||
@@ -36,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Data aspirasi tidak ditemukan.';
     } elseif ($old['status'] === 'Ditolak') {
         $error = 'Aspirasi ini sudah berstatus Ditolak dan terkunci, tidak dapat diubah lagi.';
+    } elseif ($status === 'Ditolak' && $old['status'] !== 'Menunggu') {
+        $error = 'Aspirasi yang sudah diproses tidak dapat ditolak.';
     } elseif (!in_array($status, ['Menunggu', 'Proses', 'Selesai', 'Ditolak'], true)) {
         $error = 'Status tidak valid.';
     } elseif (!$statusValid) {
@@ -143,7 +146,7 @@ $opsiStatus = [];
 if ($a && $a['status'] !== 'Ditolak') {
     $opsiStatus[] = $a['status'];
     if (!empty($statusBerikut[$a['status']])) $opsiStatus[] = $statusBerikut[$a['status']];
-    if ($a['status'] !== 'Selesai') $opsiStatus[] = 'Ditolak';
+    if ($a['status'] === 'Menunggu') $opsiStatus[] = 'Ditolak';
 }
 
 include __DIR__ . '/../view/admin/detail_aspirasi.php';

@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old = mysqli_fetch_assoc(mysqli_stmt_get_result($st));
     mysqli_stmt_close($st);
 
-    $bolehTolak = $old && $old['status'] !== 'Ditolak' && $old['status'] !== 'Selesai';
+    // Ditolak hanya boleh kalau status masih Menunggu (belum diproses admin).
+    $bolehTolak = $old && $old['status'] === 'Menunggu';
     $statusValid = $old && (
         $status === $old['status'] ||
         $status === ($statusBerikut[$old['status']] ?? null) ||
@@ -49,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Data aspirasi tidak ditemukan.';
     } elseif ($old['status'] === 'Ditolak') {
         $error = 'Aspirasi ini sudah berstatus Ditolak dan terkunci, tidak dapat diubah lagi.';
+    } elseif ($status === 'Ditolak' && $old['status'] !== 'Menunggu') {
+        $error = 'Aspirasi yang sudah diproses tidak dapat ditolak.';
     // Validasi: status baru harus salah satu dari 4 pilihan
     } elseif (!in_array($status, ['Menunggu', 'Proses', 'Selesai', 'Ditolak'], true)) {
         $error = 'Status tidak valid.';
@@ -174,13 +177,13 @@ if ($a) {
 }
 
 // Opsi status yang boleh dipilih dari status saat ini: tetap di status sekarang,
-// maju satu langkah sesuai urutan, atau Ditolak (kalau belum Selesai/Ditolak).
+// maju satu langkah sesuai urutan, atau Ditolak (hanya kalau masih Menunggu).
 $opsiStatus = [];
 if ($a && $a['status'] !== 'Ditolak') {
     $opsiStatus[] = $a['status'];
     // Tentukan pilihan status berikutnya sesuai status sekarang
     if (!empty($statusBerikut[$a['status']])) $opsiStatus[] = $statusBerikut[$a['status']];
-    if ($a['status'] !== 'Selesai') $opsiStatus[] = 'Ditolak';
+    if ($a['status'] === 'Menunggu') $opsiStatus[] = 'Ditolak';
 }
 ?>
 <!doctype html>
@@ -202,7 +205,6 @@ if ($a && $a['status'] !== 'Ditolak') {
         <ul>
             <li><a href="<?= e(url('admin/dashboard')) ?>" class="">Dashboard</a></li>
             <li><a href="<?= e(url('admin/aspirasi')) ?>" class="active">Data Aspirasi</a></li>
-            <li><a href="<?= e(url('admin/form_aspirasi')) ?>" class="">form aspirasi</a></li>
             <li><a href="<?= e(url('admin/histori')) ?>" class="">Histori Laporan</a></li>
             <li><a href="<?= e(url('admin/kategori')) ?>" class="">Kategori Sarpras</a></li>
             <li><a href="<?= e(url('admin/siswa')) ?>">Kelola Siswa</a></li>

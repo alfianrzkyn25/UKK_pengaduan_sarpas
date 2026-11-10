@@ -45,7 +45,6 @@ if (isset($st)) mysqli_stmt_close($st);
         <ul>
             <li><a href="<?= e(url('admin/dashboard')) ?>" class="">Dashboard</a></li>
             <li><a href="<?= e(url('admin/aspirasi')) ?>" class="active">Data Aspirasi</a></li>
-            <li><a href="<?= e(url('admin/form_aspirasi')) ?>" class="">form aspirasi</a></li>
             <li><a href="<?= e(url('admin/histori')) ?>" class="">Histori Laporan</a></li>
             <li><a href="<?= e(url('admin/kategori')) ?>" class="">Kategori Sarpras</a></li>
             <li><a href="<?= e(url('admin/siswa')) ?>">Kelola Siswa</a></li>
