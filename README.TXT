@@ -1,6 +1,6 @@
 
 Siswa 
-242500 (FAZAR)
+2425001 (FAZAR)
 PW 123 
 
 Admin
